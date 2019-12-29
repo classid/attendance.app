@@ -1,6 +1,6 @@
 <?php
 
-use CID\Finger\Models\FingerMachine;
+use CID\Finger\Models\Machine;
 use Illuminate\Database\Seeder;
 
 class MachineTableSeeder extends Seeder
@@ -18,11 +18,12 @@ class MachineTableSeeder extends Seeder
                 'host' => '192.168.1.201',
                 'port' => 80,
                 'key' => '0',
+                'sn' => 'BWXP191260343',
             ],
         ];
 
         foreach ($data as $key => $val) {
-            FingerMachine::create($val);
+            Machine::create($val);
         }
     }
 }

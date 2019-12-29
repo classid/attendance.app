@@ -17,6 +17,6 @@ use Illuminate\Http\Request;
     return $request->user();
 });*/
 
-Route::middleware('auth:api')->name('fingerMachine.')->group(function () {
-    Route::match(['post', 'get'], 'finger-machine', 'FingerMachineController@lookup')->name('lookup');
+Route::middleware('auth:api')->name('machine.')->group(function () {
+    Route::match(['post', 'get'], 'finger-machine', 'MachineController@lookup')->name('lookup');
 });

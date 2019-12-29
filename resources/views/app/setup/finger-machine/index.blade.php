@@ -6,7 +6,7 @@
     <div class="card-body">
       <div class="row">
         <div class="col text-right">
-          <a href="{{ route('setup.fingerMachine.create') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i></a>
+          <a href="{{ route('setup.machine.create') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i></a>
         </div>
       </div>
     </div>
@@ -36,8 +36,8 @@
             @endif
           </td>
           <td class="text-left text-nowrap">
-            <button type="button" class="btn btn-warning btn-round btn-icon btn-sm btn-quick-href" data-href="{{ route('setup.fingerMachine.edit', ['machine' => $row->id]) }}"><i class="fa fa-edit"></i></button>
-            <button type="button" class="btn btn-danger btn-round btn-icon btn-sm btn-quick-href" data-method="delete" data-href="{{ route('setup.fingerMachine.destroy', ['machine' => $row->id]) }}"><i class="fa fa-trash"></i></button>
+            <button type="button" class="btn btn-warning btn-round btn-icon btn-sm btn-quick-href" data-href="{{ route('setup.machine.edit', ['machine' => $row->id]) }}"><i class="fa fa-edit"></i></button>
+            <button type="button" class="btn btn-danger btn-round btn-icon btn-sm btn-quick-href" data-method="delete" data-href="{{ route('setup.machine.destroy', ['machine' => $row->id]) }}"><i class="fa fa-trash"></i></button>
           </td>
         </tr>
       @empty

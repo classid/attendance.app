@@ -4,9 +4,9 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFingerMachineTable extends Migration
+class CreateMachineUserFingersTable extends Migration
 {
-    protected $table = 'finger_machines';
+    protected $table = 'machine_user_fingers';
     /**
      * Run the migrations.
      *
@@ -16,11 +16,11 @@ class CreateFingerMachineTable extends Migration
     {
         Schema::create($this->table, function (Blueprint $table) {
             $table->string('id', 32)->primary();
-            $table->string('name', 30);
-            $table->string('host', 100)->default('127.0.0.1');
-            $table->unsignedSmallInteger('port')->default(80);
-            $table->string('key', 20)->default('0');
-            $table->boolean('enable')->default(true);
+            $table->string('machine_user_id', 32);
+            $table->unsignedTinyInteger('finger')->default(1);
+            $table->string('size', 3)->default('');
+            $table->boolean('valid')->default(true);
+            $table->string('template')->default('');
             $table->timestamps();
         });
     }

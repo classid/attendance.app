@@ -25,14 +25,14 @@ Route::name('auth.')->prefix('auth')->group(function() {
 });
 
 Route::middleware('auth')->namespace('Setup')->name('setup.')->prefix('setup')->group(function () {
-    Route::resource('finger-machine', 'FingerMachineController', [
+    Route::resource('finger-machine', 'MachineController', [
         'names' => [
-            'index' => 'fingerMachine',
-            'create' => 'fingerMachine.create',
-            'store' => 'fingerMachine.store',
-            'show' => 'fingerMachine.edit',
-            'update' => 'fingerMachine.update',
-            'destroy' => 'fingerMachine.destroy',
+            'index' => 'machine',
+            'create' => 'machine.create',
+            'store' => 'machine.store',
+            'show' => 'machine.edit',
+            'update' => 'machine.update',
+            'destroy' => 'machine.destroy',
         ],
         'parameters' => ['finger-machine' => 'machine',],
         'except' => ['edit'],

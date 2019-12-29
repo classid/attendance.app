@@ -2,10 +2,10 @@
 
 namespace CID\Finger\Http\Controllers\Api;
 
-use CID\Finger\Models\FingerMachine;
+use CID\Finger\Models\Machine;
 use Illuminate\Http\Request;
 
-class FingerMachineController extends Controller
+class MachineController extends Controller
 {
     /**
      * Class constructor.
@@ -17,7 +17,7 @@ class FingerMachineController extends Controller
 
     public function lookup(Request $request)
     {
-        $rs = FingerMachine::cursor();
+        $rs = Machine::cursor();
 
         return response()->json($rs);
     }

@@ -29,7 +29,7 @@
 
     $(document).ready(function () {
       dataLookup = function (params) {
-        var url = '{{ route('api.fingerMachine.lookup') }}';
+        var url = '{{ route('api.machine.lookup') }}';
         $.get(url + '?' + $.param(params.data)).then(function (res) {
           params.success(res)
         });

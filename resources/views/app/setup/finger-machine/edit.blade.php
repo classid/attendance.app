@@ -4,7 +4,7 @@
   <div class="card">
     <h2 class="card-header">Edit Mesin FingerPrint</h2>
 
-    <form action="{{ route('setup.fingerMachine.update', ['machine' => $machine->id]) }}" method="post">
+    <form action="{{ route('setup.machine.update', ['machine' => $machine->id]) }}" method="post">
       @csrf
       @method('put')
       <input type="hidden" name="_id" value="{{ $machine->id }}">
@@ -37,7 +37,7 @@
         </div>
       </div>
       <div class="card-footer">
-        <a href="{{ route('setup.fingerMachine') }}" class="btn btn-link">Batal</a>
+        <a href="{{ route('setup.machine') }}" class="btn btn-link">Batal</a>
         <button class="btn btn-primary">Simpan</button>
       </div>
     </form>

@@ -166,10 +166,11 @@ class SendJob implements ShouldQueue
                 $promise = $this->client()->requestAsync('POST', config('cid.app.attendance_sync'), [
                     'headers' => [
 //                        'Content-Type' => 'application/x-www-form-urlencoded',
+                        'Content-Type' => 'application/json',
                         'client-id' => env('CID_CLIENT_ID'),
                         'client-secret' => env('CID_CLIENT_SECRET'),
                     ],
-                    'form_params' => [
+                    'json' => [
                         'user_refs' => $atts,
                     ],
                 ])->then(
@@ -179,12 +180,18 @@ class SendJob implements ShouldQueue
                             'sent_at' => Carbon::now(),
                         ]);
                         Log::info($response->getBody());
+                        Log::info('response status: ' . $response->getStatusCode());
+                        Log::info('response body: ' . $response->getBody());
                     },
-                    function ($e) {
+                    function (ClientException $e) {
                         dump([':: Rejected', $e]);
                         Log::error(':: Rejected');
-                        Log::error($e);
-                        echo ':: Rejected';
+                        Log::error('message: ' . $e->getMessage());
+                        Log::error('request header: ' . json_encode($e->getRequest()->getHeaders()));
+                        Log::error('request body: ' . $e->getRequest()->getBody());
+                        Log::error('response status: ' . $e->getResponse()->getStatusCode());
+                        Log::error('response body: ' . $e->getResponse()->getBody());
+                        echo ':: Rejected<br>';
                     }
                 );
                 $promise->wait();
@@ -197,17 +204,13 @@ class SendJob implements ShouldQueue
                 Log::error(':: GuzzleException');
                 Log::error($e);
             }
-            catch (BadResponseException $e) {
-                Log::error(':: BadResponseException');
-                Log::error($e);
-            }
             catch (\Exception $e) {
                 Log::error(':: Exception');
                 Log::error($e);
             }
         }
 
-        Presence::whereNotNull('locked')->update(['locked' => null]);
+        Presence::whereNotNull('locked')->update(['locked' => null, 'sent_at' => null]);
         echo 'ok';
     }
 

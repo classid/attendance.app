@@ -2,7 +2,7 @@
 
 namespace CID\Finger\Jobs;
 
-use CID\Finger\Models\FingerMachine;
+use CID\Finger\Models\Machine;
 use CID\Finger\Models\Presence;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -48,7 +48,7 @@ class GetPresenceJob implements ShouldQueue
 
     protected function getMachines()
     {
-        foreach (FingerMachine::whereEnable(true)->cursor() as $key => $val) {
+        foreach (Machine::whereEnable(true)->cursor() as $key => $val) {
             $this::dispatchNow($val->toArray());
         }
     }
@@ -56,11 +56,14 @@ class GetPresenceJob implements ShouldQueue
     protected function getLogs($machine)
     {
         try {
+            if (! empty($machine['pin']) && strtolower($machine['pin']) === 'all')
+                $machine['pin'] = Str::studly($machine['pin']);
+
             Log::info('Trying connect to ' . $machine['name'] . ' at ' . $machine['host'] . ':' . $machine['port']);
 
             $connected = fsockopen($machine['host'], $machine['port'], $errno, $errStr, 1);
             if($connected) {
-                $soapRequest = "<GetAttLog><ArgComKey xsi:type=\"xsd:integer\">" . $machine['key'] . "</ArgComKey><Arg><PIN xsi:type=\"xsd:integer\">All</PIN></Arg></GetAttLog>";
+                $soapRequest = '<GetAttLog><ArgComKey xsi:type="xsd:integer">' . $machine['key'] . '</ArgComKey><Arg><PIN xsi:type="xsd:integer">' . $machine['pin'] . '</PIN></Arg></GetAttLog>';
                 $newLine = "\r\n";
 
                 fputs($connected, "POST /iWsService HTTP/1.0" . $newLine);
@@ -73,15 +76,15 @@ class GetPresenceJob implements ShouldQueue
                     $buffer .= $response;
                 }
 
-                $buffer = $this->parseData($buffer, "<GetAttLogResponse>","</GetAttLogResponse>");
+                $buffer = xml_data($buffer, '<GetAttLogResponse>','</GetAttLogResponse>');
                 $buffer = explode($newLine, $buffer);
 
                 for($i = 0; $i < count($buffer); $i++){
-                    $dataRec = $this->parseData($buffer[$i], "<Row>", "</Row>");
-                    $pin = $this->parseData($dataRec, "<PIN>", "</PIN>");
-                    $dateTime = $this->parseData($dataRec, "<DateTime>", "</DateTime>");
-                    $verified = $this->parseData($dataRec, "<Verified>", "</Verified>");
-                    $status = $this->parseData($dataRec, "<Status>", "</Status>");
+                    $dataRec = xml_data($buffer[$i], '<Row>', '</Row>');
+                    $pin = xml_data($dataRec, '<PIN>', '</PIN>');
+                    $dateTime = xml_data($dataRec, '<DateTime>', '</DateTime>');
+                    $verified = xml_data($dataRec, '<Verified>', '</Verified>');
+                    $status = xml_data($dataRec, '<Status>', '</Status>');
 
                     if (trim($pin) != '') {
                         $log = [
@@ -100,18 +103,5 @@ class GetPresenceJob implements ShouldQueue
             Log::error('Error Grabing from ' . $machine['name'] . ' at ' . $machine['host'] . ':' . $machine['port']);
             Log::error($e);
         }
-    }
-
-    protected function parseData($data, $p1, $p2) {
-        $data = " " . $data;
-        $hasil = "";
-        $awal = strpos($data, $p1);
-        if($awal != ""){
-            $akhir = strpos(strstr($data, $p1), $p2);
-            if($akhir != "") {
-                $hasil = substr($data, ($awal + strlen($p1)), ($akhir - strlen($p1)));
-            }
-        }
-        return $hasil;
     }
 }

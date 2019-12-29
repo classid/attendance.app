@@ -4,7 +4,7 @@
   <div class="card">
     <h2 class="card-header">Daftar Mesin FingerPrint</h2>
 
-    <form action="{{ route('setup.fingerMachine.store') }}" method="post">
+    <form action="{{ route('setup.machine.store') }}" method="post">
       @csrf
       <div class="card-body">
         <div class="form-group form-floating-label">
@@ -27,7 +27,7 @@
         </div>
       </div>
       <div class="card-footer">
-        <a href="{{ route('setup.fingerMachine') }}" class="btn btn-link">Batal</a>
+        <a href="{{ route('setup.machine') }}" class="btn btn-link">Batal</a>
         <button class="btn btn-primary">Simpan</button>
       </div>
     </form>
