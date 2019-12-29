@@ -40,11 +40,11 @@ Route::middleware('auth')->namespace('Setup')->name('setup.')->prefix('setup')->
 });
 
 Route::get('info', function() {
-//    phpinfo();
-    echo sys_get_temp_dir();
+    phpinfo();
+//    echo sys_get_temp_dir();
 });
 
 Route::get('test', function() {
-//    \CID\Finger\Jobs\GetPresenceJob::dispatchNow();
-    \CID\Finger\Jobs\SendJob::dispatchNow();
+//    \CID\Finger\Jobs\PullPresences::dispatchNow();
+    \CID\Finger\Jobs\PushPresences::dispatchNow();
 });

@@ -11,7 +11,14 @@ class Presence extends Model
     protected $primaryKey = 'id';
     protected $keyType = 'uuid';
 
-    protected $fillable = [ 'pin', 'datetime', 'status', 'verified', 'sent_at', ];
+    protected $fillable = [
+        'machine_id', 'pin', 'datetime', 'status', 'verified', 'sent_at',
+    ];
 
     protected $attributes = [];
+
+    public function machine()
+    {
+        return $this->belongsTo(Machine::class, 'machine_id', 'id');
+    }
 }

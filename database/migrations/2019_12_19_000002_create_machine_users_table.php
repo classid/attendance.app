@@ -22,6 +22,8 @@ class CreateMachineUsersTable extends Migration
             $table->string('password', 100);
             $table->string('group', 20)->default('');
             $table->timestamps();
+
+            $table->index(['pin', 'name']);
         });
     }
 

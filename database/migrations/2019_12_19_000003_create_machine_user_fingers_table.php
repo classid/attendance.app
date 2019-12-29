@@ -22,6 +22,11 @@ class CreateMachineUserFingersTable extends Migration
             $table->boolean('valid')->default(true);
             $table->string('template')->default('');
             $table->timestamps();
+
+            $table->index(['machine_user_id', 'finger']);
+            $table->foreign('machine_user_id')
+                ->references('id')->on('machine_users')
+                ->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

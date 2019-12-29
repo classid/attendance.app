@@ -6,7 +6,7 @@ use Yusronarif\Core\Database\Eloquent\Model;
 
 class Machine extends Model
 {
-    protected $table = 'finger_machines';
+    protected $table = 'machines';
 
     protected $primaryKey = 'id';
     protected $keyType = 'uuid';
@@ -18,4 +18,9 @@ class Machine extends Model
         'port' => 80,
         'enable' => true,
     ];
+
+    public function presences()
+    {
+        return $this->hasMany(Presence::class, 'machine_id', 'id');
+    }
 }

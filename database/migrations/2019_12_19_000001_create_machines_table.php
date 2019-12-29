@@ -25,6 +25,8 @@ class CreateMachinesTable extends Migration
             $table->string('sn', 50)->default('');
             $table->boolean('enable')->default(true);
             $table->timestamps();
+
+            $table->index(['name', 'host']);
         });
     }
 

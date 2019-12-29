@@ -12,20 +12,22 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 
-class GetPresenceJob implements ShouldQueue
+class PullPresences implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $machine;
+    protected $pin;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($machine = null)
+    public function __construct($machine = null, $pin = null)
     {
         $this->machine = $machine;
+        $this->pin = $pin;
     }
 
     /**
@@ -42,7 +44,7 @@ class GetPresenceJob implements ShouldQueue
 
         if (is_array($this->machine) && Arr::has($this->machine, ['host', 'port', 'key'])) {
 //            Log::info('Trying connect to ' . $this->machine['name'] . ' at ' . $this->machine['host'] . ':' . $this->machine['port']);
-            $this->getLogs($this->machine);
+            $this->getLogs($this->machine, $this->pin);
         }
     }
 
@@ -53,17 +55,17 @@ class GetPresenceJob implements ShouldQueue
         }
     }
 
-    protected function getLogs($machine)
+    protected function getLogs($machine, $pin = null)
     {
         try {
-            if (! empty($machine['pin']) && strtolower($machine['pin']) === 'all')
-                $machine['pin'] = Str::studly($machine['pin']);
+            if (! empty($pin) && strtolower($pin) === 'all')
+                $pin = Str::studly($pin);
 
             Log::info('Trying connect to ' . $machine['name'] . ' at ' . $machine['host'] . ':' . $machine['port']);
 
             $connected = fsockopen($machine['host'], $machine['port'], $errno, $errStr, 1);
             if($connected) {
-                $soapRequest = '<GetAttLog><ArgComKey xsi:type="xsd:integer">' . $machine['key'] . '</ArgComKey><Arg><PIN xsi:type="xsd:integer">' . $machine['pin'] . '</PIN></Arg></GetAttLog>';
+                $soapRequest = '<GetAttLog><ArgComKey xsi:type="xsd:integer">' . $machine['key'] . '</ArgComKey><Arg><PIN xsi:type="xsd:integer">' . $pin . '</PIN></Arg></GetAttLog>';
                 $newLine = "\r\n";
 
                 fputs($connected, "POST /iWsService HTTP/1.0" . $newLine);
@@ -88,6 +90,7 @@ class GetPresenceJob implements ShouldQueue
 
                     if (trim($pin) != '') {
                         $log = [
+                            'machine_id' => $machine['id'],
                             'pin' => $pin,
                             'datetime' => $dateTime,
                             'status' => $status,
@@ -100,7 +103,7 @@ class GetPresenceJob implements ShouldQueue
                 }
             }
         } catch (Exception $e) {
-            Log::error('Error Grabing from ' . $machine['name'] . ' at ' . $machine['host'] . ':' . $machine['port']);
+//            Log::error('Error Grabing from ' . $machine['name'] . ' at ' . $machine['host'] . ':' . $machine['port']);
             Log::error($e);
         }
     }

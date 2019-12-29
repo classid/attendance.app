@@ -18,15 +18,16 @@ class CreatePresenceTable extends Migration
             $table->string('id', 32)->primary();
             $table->string('machine_id', 32);
             $table->string('pin', 30);
-            $table->timestamp('datetime');
+            $table->timestamp('datetime')->nullable();
             $table->string('status', 20);
             $table->string('verified', 15);
             $table->string('locked', 32)->nullable();
             $table->timestamp('sent_at')->nullable();
             $table->timestamps();
 
+            $table->index(['pin', 'datetime']);
             $table->foreign('machine_id')
-                ->references('id')->on('finger_machines')
+                ->references('id')->on('machines')
                 ->onUpdate('cascade')->onDelete('no action');
         });
     }
