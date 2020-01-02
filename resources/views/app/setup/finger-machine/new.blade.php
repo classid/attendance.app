@@ -11,6 +11,10 @@
           <input id="name" name="name" type="text" class="form-control input-border-bottom" required autofocus>
           <label for="name" class="placeholder">Nama Mesin</label>
         </div>
+        <div class="form-group form-floating-label">
+          <input id="sn" name="sn" type="text" class="form-control input-border-bottom" required>
+          <label for="sn" class="placeholder">Serial Number</label>
+        </div>
         <div class="row">
           <div class="col">
             <div class="form-group form-floating-label">

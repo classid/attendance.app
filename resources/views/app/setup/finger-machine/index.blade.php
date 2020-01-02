@@ -25,7 +25,7 @@
       @forelse($machines as $row)
         <tr>
           <td class="text-right">{{ $loop->iteration }}.</td>
-          <td class="text-left">{{ $row->name }}</td>
+          <td class="text-left">{{ $row->name }} (SN: {{ $row->sn }})</td>
           <td class="text-left">{{ $row->host }}:{{ $row->port }}</td>
           <td class="text-center">{!! config('cid.status.enable.icons.' . $row->enable) !!}</td>
           <td class="text-center">
