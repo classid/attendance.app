@@ -51,7 +51,7 @@ class PullPresences implements ShouldQueue
     protected function getMachines()
     {
         foreach (Machine::whereEnable(true)->cursor() as $key => $val) {
-            $this::dispatchNow($val->toArray());
+            $this::dispatch($val->toArray());
         }
     }
 
