@@ -5,12 +5,8 @@ namespace CID\Finger\Jobs;
 use Carbon\Carbon;
 use CID\Finger\Models\Presence;
 use GuzzleHttp\Client as GuzzleClient;
-use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Promise\RejectedPromise;
-use GuzzleHttp\Promise\RejectionException;
-use GuzzleHttp\Psr7\Request as GuzzleRequest;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -64,7 +60,7 @@ class PushPresences implements ShouldQueue
     protected function syncAttendance($key)
     {
         $src = Presence::whereLocked($key)->cursor();
-        echo count($src) . '<br>';
+//        echo count($src) . '<br>';
         if (count($src) > 0) {
             $atts = [];
             foreach ($src as $val) {
@@ -95,20 +91,21 @@ class PushPresences implements ShouldQueue
                             'locked' => 'sent',
                             'sent_at' => Carbon::now(),
                         ]);
-                        Log::info($response->getBody());
+//                        Log::info($response->getBody());
 //                        Log::info('response status: ' . $response->getStatusCode());
 //                        Log::info('response body: ' . $response->getBody());
                     },
                     function (ClientException $e) {
 //                        dump([':: Rejected', $e]);
-                        Log::error(':: Rejected');
-                        Log::error('message: ' . $e->getMessage());
-                        Log::error('request header: ' . json_encode($e->getRequest()->getHeaders()));
-                        Log::error('request body: ' . $e->getRequest()->getBody());
-                        Log::error('response status: ' . $e->getResponse()->getStatusCode());
-                        Log::error('response body: ' . $e->getResponse()->getBody());
+//                        Log::error(':: Rejected');
+//                        Log::error('message: ' . $e->getMessage());
+//                        Log::error('request header: ' . json_encode($e->getRequest()->getHeaders()));
+//                        Log::error('request body: ' . $e->getRequest()->getBody());
+//                        Log::error('response status: ' . $e->getResponse()->getStatusCode());
+//                        Log::error('response body: ' . $e->getResponse()->getBody());
 //                        echo ':: Rejected<br>';
-                        echo $e->getRequest()->getBody();
+//                        echo $e->getRequest()->getBody();
+                        Log::error($e->getMessage());
                     }
                 );
                 $promise->wait();
@@ -126,8 +123,8 @@ class PushPresences implements ShouldQueue
             }
         }
 
-        Presence::whereNotNull('locked')->update(['locked' => null, 'sent_at' => null]);
-        echo 'ok';
+//        Presence::whereNotNull('locked')->update(['locked' => null, 'sent_at' => null]);
+//        echo 'ok';
     }
 
     public function client()

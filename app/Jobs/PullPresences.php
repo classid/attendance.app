@@ -61,7 +61,7 @@ class PullPresences implements ShouldQueue
             if (! empty($pin) && strtolower($pin) === 'all')
                 $pin = Str::studly($pin);
 
-            Log::info('Trying connect to ' . $machine['name'] . ' at ' . $machine['host'] . ':' . $machine['port']);
+//            Log::info('Trying connect to ' . $machine['name'] . ' at ' . $machine['host'] . ':' . $machine['port']);
 
             $connected = fsockopen($machine['host'], $machine['port'], $errno, $errStr, 1);
             if($connected) {
@@ -97,7 +97,7 @@ class PullPresences implements ShouldQueue
                             'verified' => $verified,
                         ];
 
-                        dump($log);
+//                        dump($log);
                         Presence::firstOrCreate($log);
                     }
                 }
