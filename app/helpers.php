@@ -3,7 +3,8 @@
 if (!function_exists('deviceConnected')) {
     function deviceConnected($host, $port) {
         try {
-            return fsockopen($host, $port, $errno, $errStr, 1);
+	    $sc = stream_socket_client($host, $port, $errno, $errStr, 1);
+            return $sc ? true : false;
         }
         catch (Exception $e) {
             return false;
