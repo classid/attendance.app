@@ -102,9 +102,10 @@ class PullPresences implements ShouldQueue
                     }
                 }
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
 //            Log::error('Error Grabing from ' . $machine['name'] . ' at ' . $machine['host'] . ':' . $machine['port']);
-            Log::error($e);
+            Log::error($e->getMessage());
+            Log::error($e->getTraceAsString());
         }
     }
 }
