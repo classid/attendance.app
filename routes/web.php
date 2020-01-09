@@ -39,6 +39,15 @@ Route::middleware('auth')->namespace('Setup')->name('setup.')->prefix('setup')->
     ]);
 });
 
+Route::middleware('auth')->namespace('Logs')->name('logs.')->prefix('logs')->group(function () {
+    Route::resource('presence', 'PresenceController', [
+        'names' => [
+            'index' => 'presence',
+        ],
+        'only' => ['index'],
+    ]);
+});
+
 Route::get('info', function() {
     abort(404);
 //    phpinfo();

@@ -1,11 +1,11 @@
 <?php
 
-namespace CID\Finger\Http\Controllers\Setup;
+namespace CID\Finger\Http\Controllers\Logs;
 
-use CID\Finger\Models\Machine;
+use CID\Finger\Models\Presence;
 use Illuminate\Http\Request;
 
-class MachineController extends Controller
+class PresenceController extends Controller
 {
     /**
      * Class constructor.
@@ -13,9 +13,9 @@ class MachineController extends Controller
     public function __construct()
     {
         parent::__construct();
-        $this->prefixView .= 'finger-machine';
+        $this->prefixView .= 'presence';
 
-        $this->setActiveMenu('machine');
+        $this->setActiveMenu('log:presence');
     }
 
     /**
@@ -25,10 +25,10 @@ class MachineController extends Controller
      */
     public function index()
     {
-        $this->setPageTitle('Finger Machines');
-        $this->setBreadCrumbs('Finger Machine');
+        $this->setPageTitle('Presence Logs');
+        $this->setBreadCrumbs('Presence Logs');
 
-        $this->setData('machines', Machine::orderByRaw('name, host, port')->cursor());
+        $this->setData('presences', Presence::orderByRaw('datetime DESC')->cursor());
 
         return $this->view('index');
     }

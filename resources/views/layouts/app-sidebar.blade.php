@@ -9,8 +9,8 @@
       <span class="sidebar-mini-icon"><i class="fa fa-ellipsis-h"></i></span>
       <h4 class="text-section">LOG</h4>
     </li>
-    <li class="nav-item submenu {{ in_array('logPresence', $activeMenu)?'active':'' }}">
-      <a href="{{ route('setup.machine') }}"><i class="fas fa-list-alt"></i><p>Presensi</p></a>
+    <li class="nav-item submenu {{ in_array('log:presence', $activeMenu)?'active':'' }}">
+      <a href="{{ route('logs.presence') }}"><i class="fas fa-list-alt"></i><p>Presensi</p></a>
     </li>
     <li class="nav-section {{ in_array('setup', $activeMenu)?'active':'' }}">
       <span class="sidebar-mini-icon"><i class="fa fa-ellipsis-h"></i></span>
