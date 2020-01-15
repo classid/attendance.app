@@ -70,8 +70,8 @@
           <nav class="pull-left">
             <ul class="nav">
               <li class="nav-item">
-                <a class="nav-link" href="http://www.themekita.com">
-                  ThemeKita
+                <a class="nav-link" href="https://mumtaz.app">
+                  Mumtaz
                 </a>
               </li>
               <li class="nav-item">
@@ -87,7 +87,7 @@
             </ul>
           </nav>
           <div class="copyright ml-auto">
-            2018, made with <i class="fa fa-heart heart text-danger"></i> by <a href="http://www.themekita.com">ThemeKita</a>
+            {{ date("Y") }}, made with <i class="fa fa-heart heart text-danger"></i> by <a href="https://mumtaz.app">Mumtaz App</a>
           </div>
         </div>
       </footer>

@@ -30,12 +30,18 @@
               <label for="port" class="placeholder">Port</label>
             </div>
           </div>
+          <div class="col">
+            <div class="form-group form-floating-label">
+              <input id="key" name="key" type="number" class="form-control input-border-bottom" value="{{ old('key', $machine->key) }}" required>
+              <label for="key" class="placeholder">Key</label>
+            </div>
+          </div>
         </div>
         <div class="form-group">
           <label class="form-floating-label checkbox-inline">
             <span style="margin-right: 30px;">Status</span>
             <input type="checkbox" name="enable" id="macStatus" value="1" {{ old('enable', $machine->enable)==1 ? 'checked="checked':'' }}
-                   onchange="$(this).val(!$(this).parent().is('.toggle.off'))"
+            onchange="$(this).val(!$(this).parent().is('.toggle.off'))"
                    data-toggle="toggle" data-onstyle="primary" data-style="btn-round" data-on="Enabled" data-off="Disabled">
           </label>
         </div>
