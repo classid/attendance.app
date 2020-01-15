@@ -17,7 +17,7 @@
       <h4 class="text-section">Setup</h4>
     </li>
     <li class="nav-item submenu {{ in_array('machine', $activeMenu)?'active':'' }}">
-      <a href="{{ route('setup.machine') }}"><i class="fas fa-fingerprint"></i><p>Mesin FingerPrint</p></a>
+      <a href="{{ route('setup.machine') }}"><i class="fas fa-desktop"></i><p>Mesin FingerPrint</p></a>
     </li>
     {{--<li class="nav-item submenu">
       <a data-toggle="collapse" href="#base">
