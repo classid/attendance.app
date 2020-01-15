@@ -9,7 +9,7 @@
   <link rel="icon" href="{{ asset('assets/img/icon.ico') }}" type="image/x-icon"/>
 
   <!-- Fonts and icons -->
-  <script src="{{ asset('assets/js/plugin/webfont/webfont.min.js') }}"></script>
+  <script src="{{ vendor('webfont/webfont.min.js') }}"></script>
   <script>
     WebFont.load({
       google: {"families":["Lato:300,400,700,900"]},
@@ -95,7 +95,7 @@
 {{--    @includeIf('layouts.app-quick-sidebar')--}}
   </div>
   <script src="{{ vendor('jquery/dist/jquery.min.js') }}"></script>
-  <script src="{{ asset('assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>
+  <script src="{{ vendor('jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>
   <script src="{{ vendor('popper.js/dist/umd/popper.min.js') }}"></script>
   <script src="{{ vendor('bootstrap/js/bootstrap.min.js') }}"></script>
   <script src="{{ vendor('jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>
