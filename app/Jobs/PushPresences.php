@@ -50,7 +50,7 @@ class PushPresences implements ShouldQueue
         $key = Uuid::uuid4()->getHex();
         Presence::whereIn('id', function ($query) {
             $query->from((new Presence)->getTable())->select('id')->whereNull('sent_at')->whereNull('locked');
-        })->orderBy('created_at', 'asc')->limit(5)->update([
+        })->orderBy('created_at', 'asc')->update([
             'locked' => $key,
         ]);
 
