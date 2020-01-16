@@ -48,13 +48,21 @@ class PushPresences implements ShouldQueue
     protected function setLock()
     {
         $key = Uuid::uuid4()->getHex();
-        Presence::whereIn('id', function ($query) {
+        /*Presence::whereIn('id', function ($query) {
             $query->from((new Presence)->getTable())->select('id')->whereNull('sent_at')->whereNull('locked');
         })->orderBy('created_at', 'asc')->update([
             'locked' => $key,
+        ]);*/
+
+        // locked first
+        $updated = Presence::whereNull('sent_at')->whereNull('locked')->limit(10)->update([
+            'locked' => $key,
         ]);
 
-        $this::dispatchNow($key);
+        if ($updated > 0) {
+            $this::dispatch($key);
+            $this->setLock();
+        }
     }
 
     protected function syncAttendance($key)

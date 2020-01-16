@@ -54,6 +54,8 @@ Route::get('info', function() {
 //    echo sys_get_temp_dir();
 });
 
+//update `log_presences` set `locked` = 'e0cc88a1f4084af3b3b50295b00c4d8d', `log_presences`.`updated_at` = '2020-01-16 11:29:13' where `id` in (select `id` from `log_presences` where `sent_at` is null and `locked` is null) order by `created_at` asc)
+
 Route::get('test', function() {
     if (request()->get('accept') == 'json') {
         header('Accept: application/json');
