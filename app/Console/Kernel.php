@@ -29,8 +29,8 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
         $schedule->job(new PullPresences)->everyMinute();
-        $schedule->job(new PushPresences)->everyMinute();
-//        $schedule->job(new PushPresences)->everyFiveMinutes()->between('4:00', '21:00');
+//        $schedule->job(new PushPresences)->everyMinute();
+        $schedule->job(new PushPresences)->everyFiveMinutes()->between('4:00', '21:00');
     }
 
     /**
