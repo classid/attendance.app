@@ -55,11 +55,13 @@ Route::get('info', function() {
 });
 
 Route::get('test', function() {
-//    header('Accept: application/json');
-//    header('Content-Type: application/json');
-//    app('debugbar')->disable();
+    if (request()->get('accept') == 'json') {
+        header('Accept: application/json');
+        header('Content-Type: application/json');
+        app('debugbar')->disable();
+    }
 //    \CID\Finger\Jobs\PullPresences::dispatchNow();
-//    \CID\Finger\Jobs\PushPresences::dispatchNow();
+    \CID\Finger\Jobs\PushPresences::dispatchNow();
 
 //    try {
 //        $address = '192.168.35.10:88';
@@ -108,5 +110,5 @@ Route::get('test', function() {
 //        dump([$val->host . ':' . $val->port, $conn, !$conn?'not connected':'connected', (bool) $conn]);
 //        dump($client->connect($val->host . ':' . $val->port));
 //    }
-    abort(404);
+//    abort(404);
 });
