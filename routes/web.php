@@ -49,8 +49,12 @@ Route::middleware('auth')->namespace('Logs')->name('logs.')->prefix('logs')->gro
 });
 
 Route::get('info', function() {
-    abort(404);
-//    phpinfo();
+    //abort(404);
+    dd([
+        bcrypt('erlina'), bcrypt('erlina-token'),
+        bcrypt('titi'), bcrypt('titi-token'),
+    ]);
+    phpinfo();
 //    echo sys_get_temp_dir();
 });
 

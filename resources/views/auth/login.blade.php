@@ -16,9 +16,7 @@
       <div class="form-group form-floating-label">
         <input id="password" name="password" type="password" class="form-control input-border-bottom @error('password') is-invalid @enderror" required autofocus>
         <label for="password" class="placeholder">Password</label>
-        <div class="show-password">
-          <i class="icon-eye"></i>
-        </div>
+        <div class="show-password"><i class="icon-eye"></i></div>
 
         @error('password')
           <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
